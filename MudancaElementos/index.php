@@ -1,3 +1,7 @@
+<?php
+//Criar o id do carro estático para usar como exemplo
+$carro_id = 1;
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -10,6 +14,10 @@
 
 <body>
     <h2 class="titulo">Cadastrar Acessórios</h2>
+    <!-- Receber a mensagem de sucesso ou erro -->
+    <span id="msg"></span>
+    <!-- Fornecer o id do carro -->
+    <span data-carro-id="<?= $carro_id ?>" id="carroId"></span>
     <div class="areaDados">
         <h2>Disponível</h2>
         <ul class="containerItem">

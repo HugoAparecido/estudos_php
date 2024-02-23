@@ -1,6 +1,7 @@
 // Receber os seletores
 const itemArrastavel = document.querySelectorAll(".itemArrastavel");
 const containerItem = document.querySelectorAll(".containerItem");
+const msg = document.getElementById("msg");
 // Percorrer a lista de elementos disponíveis
 itemArrastavel.forEach(item => {
     // Doisparar o evento quando o usuário iniciar o arraste do elemento
@@ -48,12 +49,41 @@ function itemSairContainer() {
     // Alterar a cor de fundo quando elemento arrastado deixa a área de destino
     this.style.backgroundColor = "rgba(0, 0, 0, 0)";
 }
-function soltarItemContainer() {
+async function soltarItemContainer() {
     // Atribuir fundo transparente para o elemento referenciado
     this.style.backgroundColor = "rgba(0, 0, 0, 0)";
     // Anexar o elemento que estava sendo arrastado
     this.appendChild(itemArrastado);
     // Acessar o atributo data-acessorio-id
     const acessorio = itemArrastado.getAttribute("data-acessorio-id");
-    console.log(acessorio);
+    const carroId = document.getElementById('carroId').getAttribute('data-carro-id');
+    // Criar o objeto e atribuir os valores
+    const formData = new FormData();
+    formData.append('acessorio_id', acessorio);
+    formData.append('carro_id', carroId);
+    // Enviar os dados para o servidor PHP utilizando o método POST
+    var dados = await fetch('salvar_acessorio.php', {
+        method: 'POST',
+        body: formData
+    });
+    var resposta = await dados.json();
+    console.log(resposta);
+    // Acessa o IF qunado o arquivo PHP retornar status TRUE
+    if (resposta['status']) {
+        // Enviar a mensagem paar o HTML
+        msg.innerHTML = `<p style='color: green;'>${resposta['mensagem']}</p>`;
+        // Chamar a função para remover a mensagem após 3 segundos
+        removerMsg();
+    } else {
+        // Enviar a mensagem paar o HTML
+        msg.innerHTML = `<p style='color: #f00;'>${resposta['mensagem']}</p>`;
+        // Chamar a função para remover a mensagem após 3 segundos
+        removerMsg();
+    }
+}
+// Função para remover a mensagem após 3 segundos
+function removerMsg() {
+    setTimeout(() => {
+        document.getElementById('msg').innerHTML = "";
+    }, 3000);
 }
