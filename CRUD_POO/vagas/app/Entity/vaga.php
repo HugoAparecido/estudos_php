@@ -41,13 +41,13 @@ class Vaga
         $this->data = date('Y-m-d H:i:s');
         //INSERIR A VAGA NO BANCO
         $obDatabase = new Database('vaga');
-        $obDatabase->insert([
+        $this->id = $obDatabase->insert([
             'titulo' => $this->titulo,
             'descricao' => $this->descricao,
             'ativo' => $this->ativo,
             'data' => $this->data
         ]);
-        //ATRIBUIR O ID NA INSTÂNCIA
         //RETORNAR SUCESSO
+        return true;
     }
 }
