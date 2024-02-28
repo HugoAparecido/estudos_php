@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use \App\Db\Database;
+use \PDO;
 
 class Vaga
 {
@@ -49,5 +50,16 @@ class Vaga
         ]);
         //RETORNAR SUCESSO
         return true;
+    }
+    /**
+     * Método responsável por obter as vagas do banco de dados
+     * @param string $where
+     * @param string $order
+     * @param string $limit
+     * @return array
+     */
+    public static function getVagas($where = null, $order = null, $limit = null)
+    {
+        return (new Database('vaga'))->select($where, $order, $limit)->fetchAll(PDO::FETCH_CLASS, self::class);
     }
 }
