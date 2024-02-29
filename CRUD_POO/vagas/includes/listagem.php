@@ -1,3 +1,16 @@
+<?php
+$resultados = '';
+foreach ($vagas as $vaga) {
+    $resultados .= '<tr>
+    <td>' . $vaga->id . '</td>
+    <td>' . $vaga->titulo . '</td>
+    <td>' . $vaga->descricao . '</td>
+    <td>' . $vaga->ativo . '</td>
+    <td>' . $vaga->data . '</td>
+    <td></td>
+    </tr>';
+}
+?>
 <main>
     <section>
         <a href="cadastrar.php">
@@ -16,7 +29,9 @@
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <?= $resultados ?>
+            </tbody>
         </table>
     </section>
 </main>
