@@ -52,6 +52,19 @@ class Vaga
         return true;
     }
     /**
+     * Método responsável por atualizar as vagas no banco
+     * @return boolean
+     */
+    public function atualizar()
+    {
+        return (new Database('vaga'))->update('id = ' . $this->id, [
+            'titulo' => $this->titulo,
+            'descricao' => $this->descricao,
+            'ativo' => $this->ativo,
+            'data' => $this->data
+        ]);
+    }
+    /**
      * Método responsável por obter as vagas do banco de dados
      * @param string $where
      * @param string $order
@@ -61,5 +74,14 @@ class Vaga
     public static function getVagas($where = null, $order = null, $limit = null)
     {
         return (new Database('vaga'))->select($where, $order, $limit)->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
+    /**
+     * Método responsável por buscar uma vaga com base em seu ID
+     * @param integer $id
+     * @return Vaga
+     */
+    public static function getVaga($id)
+    {
+        return (new Database('vaga'))->select('id = ' . $id)->fetchObject(self::class);
     }
 }
